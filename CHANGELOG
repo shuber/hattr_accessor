@@ -1,3 +1,4 @@
 2008-10-14 - Sean Huber (shuber@huberry.com)
 	* Initial import
 	* Update README
+	* Add tests to ensure errors are raised when :attribute does not exist

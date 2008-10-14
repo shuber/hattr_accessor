@@ -2,10 +2,12 @@ require File.dirname(__FILE__) + '/alias_method_chain'
 
 module Huberry
   module HattrAccessor
+    class MissingAttributeError < StandardError; self; end
+    
     def hattr_accessor(*attrs)
       options = attrs.last.is_a?(Hash) ? attrs.pop : {}
       
-      raise 'Must specify the :attribute option which should be a symbol that references a hash attribute' if options[:attribute].nil?
+      raise MissingAttributeError, 'Must specify the :attribute option which should be a symbol that references a hash attribute' if options[:attribute].nil?
 
       attrs.each do |name|
         # Defines a type casting getter method for each attribute

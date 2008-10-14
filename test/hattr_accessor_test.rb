@@ -132,4 +132,16 @@ class HattrAccessorTest < Test::Unit::TestCase
     assert_equal true, @custom_field.required
   end
   
+  def test_should_raise_exception_if_attribute_option_is_not_passed
+    assert_raises Huberry::HattrAccessor::MissingAttributeError do
+      CustomField.hattr_accessor :test
+    end
+  end
+  
+  def test_should_raise_exception_if_attribute_option_reference_does_not_exist
+    assert_raises NameError do
+      CustomField.hattr_accessor :test, :attribute => :non_existent
+    end
+  end
+
 end

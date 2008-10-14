@@ -49,7 +49,7 @@ This is useful if you're using this gem/plugin with ActiveRecord which will pass
 	    @some_class.birth_day # => '12'
 	    # notice it returns as a string instead of an integer
 	    # using :type => :integer will fix this
-		end
+	  end
 	end
 
 The current options (email me for suggestions for others) for :type are:

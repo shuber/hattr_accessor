@@ -11,7 +11,7 @@ Installation
 
 OR
 
-	gem install hattr_accessor
+	gem install shuber-hattr_accessor
 
 
 Usage

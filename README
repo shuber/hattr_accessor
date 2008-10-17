@@ -11,7 +11,7 @@ Installation
 
 OR
 
-	gem install hattr_accessor
+	gem install shuber-hattr_accessor
 
 
 Usage
@@ -65,7 +65,7 @@ Example
 
 	class CustomField < ActiveRecord::Base
 	  # has a text or blob attribute named :configuration
-	  serialize :configuration, {}
+	  serialize :configuration, Hash
 	end
 	
 	class CustomFields::Date < CustomField

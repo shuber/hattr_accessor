@@ -40,7 +40,8 @@ module Huberry
       unless instance_methods.include? "#{options[:attribute]}_with_hattr_accessor"
         class_eval <<-EOF
           def #{options[:attribute]}_with_hattr_accessor
-            @#{options[:attribute]}_with_hattr_accessor ||= #{options[:attribute]}_without_hattr_accessor || {}
+            self.#{options[:attribute]} = {} if #{options[:attribute]}_without_hattr_accessor.nil?
+            #{options[:attribute]}_without_hattr_accessor
           end
           alias_method_chain :#{options[:attribute]}, :hattr_accessor
         EOF

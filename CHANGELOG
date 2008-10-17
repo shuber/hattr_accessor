@@ -1,3 +1,7 @@
+2008-10-17 - Sean Huber (shuber@einsteinindustries.com)
+	* Refactor #{attribute}_with_hattr_accessor method
+	* Rename doc/README.markdown to doc/README
+
 2008-10-14 - Sean Huber (shuber@huberry.com)
 	* Initial import
 	* Update README

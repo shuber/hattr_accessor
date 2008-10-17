@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name    = 'hattr_accessor'
-  s.version = '1.0.0'
+  s.version = '1.0.1'
   s.date    = '2008-10-14'
   
   s.summary     = 'A gem/plugin that allows you to define attr_accessors that reference members of a hash'
@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
     lib/hattr_accessor.rb
     MIT-LICENSE
     Rakefile
-    README.markdown
+    README
   )
   
   s.test_files = %w(test/hattr_accessor_test.rb)

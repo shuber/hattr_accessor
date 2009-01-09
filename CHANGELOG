@@ -1,6 +1,7 @@
 2009-01-08 - Sean Huber (shuber@huberry.com)
   * Update CHANGELOG email addresses
   * Remove .gitignore
+  * Update README
 
 2008-10-17 - Sean Huber (shuber@huberry.com)
 	* Refactor #{attribute}_with_hattr_accessor method

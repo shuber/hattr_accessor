@@ -5,14 +5,14 @@ require 'rake/rdoctask'
 desc 'Default: run the hattr_accessor tests'
 task :default => :test
  
-desc 'Test the hattr_accessor plugin.'
+desc 'Test the hattr_accessor gem/plugin.'
 Rake::TestTask.new(:test) do |t|
   t.libs << 'lib'
   t.pattern = 'test/*_test.rb'
   t.verbose = true
 end
  
-desc 'Generate documentation for the hattr_accessor plugin.'
+desc 'Generate documentation for the hattr_accessor gem/plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = 'hattr_accessor'

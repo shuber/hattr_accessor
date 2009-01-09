@@ -1,23 +1,21 @@
-hattr_accessor
-==============
+hattr\_accessor
+===============
 
-A gem/plugin that allows you to define attr_accessors that reference members of a hash.
+A gem/plugin that allows you to define attr\_accessors that reference members of a hash.
 
 
 Installation
 ------------
 
+	gem install shuber-hattr_accessor --source http://gems.github.com
+	OR
 	script/plugin install git://github.com/shuber/proxy.git
-
-OR
-
-	gem install shuber-hattr_accessor
 
 
 Usage
 -----
 
-The hattr_accessor method requires an option named :attribute which should be a symbol that represents the attribute name of the hash that you want to reference. For example:
+The hattr\_accessor method requires an option named `:attribute` which should be a symbol that represents the attribute name of the hash that you want to reference. For example:
 
 	class SomeClass
 	  attr_accessor :my_hash
@@ -28,7 +26,7 @@ The hattr_accessor method requires an option named :attribute which should be a 
 	@some_class.my_attr = 'test'
 	@some_class.my_hash # => { :my_attr => 'test' }
 
-You may optionally pass a :type option which will type cast the value when calling the getter method. For example:
+You may optionally pass a `:type` option which will type cast the value when calling the getter method. For example:
 
 	class SomeClass
 	  attr_accessor :my_hash
@@ -52,7 +50,7 @@ This is useful if you're using this gem/plugin with ActiveRecord which will pass
 	  end
 	end
 
-The current options (email me for suggestions for others) for :type are:
+The current options (email me for suggestions for others) for `:type` are:
 
 	:string
 	:integer

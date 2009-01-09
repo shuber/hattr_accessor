@@ -19,5 +19,3 @@ module Huberry
     end
   end
 end
-
-Module.send :include, Huberry::AliasMethodChain unless Module.method_defined? :alias_method_chain

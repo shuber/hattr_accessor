@@ -2,6 +2,7 @@
   * Update CHANGELOG email addresses
   * Remove .gitignore
   * Update README
+  * Move include logic into the main hattr_accessor file
 
 2008-10-17 - Sean Huber (shuber@huberry.com)
 	* Refactor #{attribute}_with_hattr_accessor method

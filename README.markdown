@@ -1,7 +1,7 @@
 hattr\_accessor
 ===============
 
-A gem/plugin that allows you to define attr\_accessors that reference members of a hash.
+Allows you to define attr\_accessors that reference members of a hash.
 
 
 Installation

@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name    = 'hattr_accessor'
-  s.version = '1.0.2'
-  s.date    = '2009-01-08'
+  s.version = '1.0.3'
+  s.date    = '2009-01-10'
   
-  s.summary     = 'A gem/plugin that allows you to define attr_accessors that reference members of a hash'
-  s.description = 'A gem/plugin that allows you to define attr_accessors that reference members of a hash'
+  s.summary     = 'Allows you to define attr_accessors that reference members of a hash'
+  s.description = 'Allows you to define attr_accessors that reference members of a hash'
   
   s.author   = 'Sean Huber'
   s.email    = 'shuber@huberry.com'
@@ -14,7 +14,6 @@ Gem::Specification.new do |s|
   
   s.files = %w(
     CHANGELOG
-    init.rb
     lib/alias_method_chain.rb
     lib/hattr_accessor.rb
     MIT-LICENSE

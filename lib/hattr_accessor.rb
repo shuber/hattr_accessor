@@ -1,5 +1,7 @@
-require File.dirname(__FILE__) + '/alias_method_chain'
-Object.send :include, Huberry::AliasMethodChain unless Object.method_defined? :alias_method_chain
+unless Object.method_defined? :alias_method_chain
+  require File.dirname(__FILE__) + '/alias_method_chain'
+  Object.send :include, Huberry::AliasMethodChain
+end
 
 module Huberry
   module HattrAccessor

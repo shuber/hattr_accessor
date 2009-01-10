@@ -1,1 +1,0 @@
-require 'hattr_accessor'

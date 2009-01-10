@@ -1,5 +1,6 @@
 2009-01-10 - Sean Huber (shuber@huberry.com)
   * Object includes Huberry::AliasMethodChain instead of Module
+  * Remove init.rb
 
 2009-01-08 - Sean Huber (shuber@huberry.com)
   * Update CHANGELOG email addresses

@@ -1,54 +1,55 @@
 hattr\_accessor
 ===============
 
-Allows you to define attr\_accessors that reference members of a hash.
+Allows you to define attr\_accessors that reference members of a hash
 
 
 Installation
 ------------
 
 	gem install shuber-hattr_accessor --source http://gems.github.com
-	OR
-	script/plugin install git://github.com/shuber/proxy.git
 
 
 Usage
 -----
 
-The hattr\_accessor method requires an option named `:attribute` which should be a symbol that represents the attribute name of the hash that you want to reference. For example:
+The hattr\_accessor method requires an option named `:attribute` which should be name of an attribute which will store the hash. For example:
 
-	class SomeClass
-	  attr_accessor :my_hash
-	  hattr_accessor :my_attr, :attribute => :my_hash
+	class DataSource
+	  hattr_accessor :adapter, :username, :password, :attribute => :credentials
 	end
+
+The reader and writer methods for `:attribute` (`:credentials` in the example above) would be automatically created unless they exist already. 
+You can then use those attributes like normal ones:
+
+	@data_source = DataSource.new
+	@data_source.adapter = 'mysql'
+	@data_source.username = 'root'
+	@data_source.credentials # { :adapter => 'mysql', :username => 'root' }
 	
-	@some_class = SomeClass.new
-	@some_class.my_attr = 'test'
-	@some_class.my_hash # => { :my_attr => 'test' }
+	@data_source.credentials = {}
+	@data_source.adapter # nil
 
-You may optionally pass a `:type` option which will type cast the value when calling the getter method. For example:
+The reader method for `:attribute` is overwritten with logic to ensure that it returns a hash by default.
 
-	class SomeClass
-	  attr_accessor :my_hash
-	  hattr_accessor :birth_day, :birth_year, :type => :integer, :attribute => :my_hash
-	end
-	
-	@some_class.birth_day = '12'
-	@some_class.birth_day # => 12
-	
-	@some_class.birth_year = 2008
-	@some_class.birth_year # => 2008
+	@data_source = DataSource.new
+	@data_source.credentials # {}
 
-This is useful if you're using this gem/plugin with ActiveRecord which will pass values as strings if submitted from a form. For Example:
+You may optionally pass a `:type` option which will type cast the values when calling their getter methods. This is useful if you're using this 
+gem with rails which will pass values as strings if submitted from a form. For example:
 
-	class SomeController < ApplicationController
-	  def create
-	    @some_class = SomeClass.new(params[:some_class])
-	    @some_class.birth_day # => '12'
-	    # notice it returns as a string instead of an integer
-	    # using :type => :integer will fix this
+	class CustomField::Date < CustomField
+	  hattr_accessor :offset, :type => :integer, :attribute => :configuration
+	  hattr_accessor :unit, :reference, :type => :string, :attribute => :configuration
+	  
+	  def default_value
+	    self.offset.send(self.unit.to_sym).send(self.reference.to_sym)
 	  end
 	end
+	
+	@custom_field = CustomField::Date.new(:offset => '5', :unit => 'days', :reference => 'from_now')
+	@custom_field.offset # 5 (notice it's an integer, not a string)
+	@custom_field.default_value # evaluates 5.days.from_now 
 
 The current options (email me for suggestions for others) for `:type` are:
 
@@ -57,27 +58,16 @@ The current options (email me for suggestions for others) for `:type` are:
 	:float
 	:boolean
 
-
-Example
--------
+NOTE: Make sure your call `define_attribute_methods` before calling `hattr_accessor` when you're using ActiveRecord and your `:attribute` is a 
+database field.
 
 	class CustomField < ActiveRecord::Base
-	  # has a text or blob attribute named :configuration
+	  define_attribute_methods
+	  
 	  serialize :configuration, Hash
+	  
+	  hattr_accessor :testing, :attribute => :configuration
 	end
-	
-	class CustomFields::Date < CustomField
-	  hattr_accessor :offset, :type => :integer, :attribute => :configuration
-	  hattr_accessor :unit, :reference, :attribute => :configuration
-		
-	  def default_value
-	    self.offset.send(self.unit).send(self.reference)
-	  end
-	end
-	
-	@field = CustomFields::Date.new({ :offset => '5', :unit => 'days', :reference => 'from_now' })
-	@field.configuration # => { :offset => '5', :unit => 'days', :reference => 'from_now' }
-	@field.default_value # => evaluates 5.days.from_now
 
 
 Contact

@@ -10,7 +10,7 @@ module Huberry
     def hattr_accessor(*attrs)
       options = attrs.last.is_a?(Hash) ? attrs.pop : {}
       
-      raise MissingAttributeError, 'Must specify the :attribute option which should be a symbol that references a hash attribute' if options[:attribute].nil?
+      raise MissingAttributeError, 'Must specify the :attribute option with the name of an attribute which will store the hash' if options[:attribute].nil?
 
       attrs.each do |name|
         # Defines a type casting getter method for each attribute
@@ -25,7 +25,7 @@ module Huberry
             when :float
               value.to_f
             when :boolean
-              ![false, nil, 0, '0'].include? value
+              ![false, nil, 0, '0'].include?(value)
             else
               value
           end
@@ -38,9 +38,17 @@ module Huberry
         end
       end
       
+      # Create the reader for #{options[:attribute]} unless it exists already
+      #
+      attr_reader options[:attribute] unless instance_methods.include?(options[:attribute].to_s)
+      
+      # Create the writer for #{options[:attribute]} unless it exists already
+      #
+      attr_writer options[:attribute] unless instance_methods.include?("#{options[:attribute]}=")
+      
       # Overwrites the method passed as the :attribute option to ensure that it is a hash by default
       #
-      unless instance_methods.include? "#{options[:attribute]}_with_hattr_accessor"
+      unless instance_methods.include?("#{options[:attribute]}_with_hattr_accessor")
         class_eval <<-EOF
           def #{options[:attribute]}_with_hattr_accessor
             self.#{options[:attribute]} = {} if #{options[:attribute]}_without_hattr_accessor.nil?

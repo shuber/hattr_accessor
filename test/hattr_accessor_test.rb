@@ -2,12 +2,19 @@ require 'test/unit'
 require File.dirname(__FILE__) + '/../lib/hattr_accessor'
 
 class CustomField
-  attr_accessor :configuration, :configuration2
   hattr_accessor :name, :type, :type => :string, :attribute => :configuration
   hattr_accessor :unit, :reference, :attribute => :configuration
   hattr_accessor :offset, :type => :integer, :attribute => :configuration
   hattr_accessor :amount, :type => :float, :attribute => :configuration
   hattr_accessor :required, :type => :boolean, :attribute => :configuration2
+  
+  def configuration2
+    @configuration2 ||= { :some_default_reader_value => true }
+  end
+  
+  def configuration2=(value)
+    @configuration2 = value.merge(:some_default_writer_value => true)
+  end
 end
 
 class HattrAccessorTest < Test::Unit::TestCase
@@ -99,7 +106,7 @@ class HattrAccessorTest < Test::Unit::TestCase
   
   def test_should_set_required_in_configuration2
     @custom_field.required = true
-    assert_equal({ :required => true }, @custom_field.configuration2)
+    assert_equal true, @custom_field.configuration2[:required]
   end
   
   def test_should_get_required
@@ -138,10 +145,13 @@ class HattrAccessorTest < Test::Unit::TestCase
     end
   end
   
-  def test_should_raise_exception_if_attribute_option_reference_does_not_exist
-    assert_raises NameError do
-      CustomField.hattr_accessor :test, :attribute => :non_existent
-    end
+  def test_should_not_overwrite_existing_reader
+    assert_equal true, @custom_field.configuration2[:some_default_reader_value]
   end
-
+  
+  def test_should_not_overwrite_existing_writer
+    @custom_field.configuration2 = {}
+    assert_equal true, @custom_field.configuration2[:some_default_writer_value]
+  end
+  
 end

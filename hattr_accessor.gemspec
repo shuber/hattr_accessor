@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name    = 'hattr_accessor'
-  s.version = '1.0.3'
-  s.date    = '2009-01-10'
+  s.version = '1.0.4'
+  s.date    = '2009-01-12'
   
   s.summary     = 'Allows you to define attr_accessors that reference members of a hash'
   s.description = 'Allows you to define attr_accessors that reference members of a hash'
@@ -14,7 +14,6 @@ Gem::Specification.new do |s|
   
   s.files = %w(
     CHANGELOG
-    lib/alias_method_chain.rb
     lib/hattr_accessor.rb
     MIT-LICENSE
     Rakefile

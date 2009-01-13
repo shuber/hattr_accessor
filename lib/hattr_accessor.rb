@@ -1,8 +1,3 @@
-unless Object.method_defined? :alias_method_chain
-  require File.dirname(__FILE__) + '/alias_method_chain'
-  Object.send :include, Huberry::AliasMethodChain
-end
-
 module Huberry
   module HattrAccessor
     class MissingAttributeError < StandardError; self; end
@@ -54,7 +49,8 @@ module Huberry
             self.#{options[:attribute]} = {} if #{options[:attribute]}_without_hattr_accessor.nil?
             #{options[:attribute]}_without_hattr_accessor
           end
-          alias_method_chain :#{options[:attribute]}, :hattr_accessor
+          alias_method :#{options[:attribute]}_without_hattr_accessor, :#{options[:attribute]}
+          alias_method :#{options[:attribute]}, :#{options[:attribute]}_with_hattr_accessor
         EOF
       end
     end

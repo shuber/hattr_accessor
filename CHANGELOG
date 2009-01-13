@@ -1,5 +1,6 @@
 2009-01-12 - Sean Huber (shuber@huberry.com)
   * Check for existing reader and writer methods separately before creating default ones for options[:attribute]
+  * Remove alias_method_chain - unnecessary
 
 2009-01-10 - Sean Huber (shuber@huberry.com)
   * Object includes Huberry::AliasMethodChain instead of Module

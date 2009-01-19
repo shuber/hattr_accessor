@@ -20,7 +20,7 @@ module Huberry
             when :float
               value.to_f
             when :boolean
-              ![false, nil, 0, '0'].include?(value)
+              ![false, nil, 0, '0', ''].include?(value)
             else
               value
           end

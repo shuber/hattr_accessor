@@ -136,7 +136,7 @@ class HattrAccessorTest < Test::Unit::TestCase
     assert_equal true, @custom_field.required
     
     @custom_field.required = ''
-    assert_equal true, @custom_field.required
+    assert_equal false, @custom_field.required
   end
   
   def test_should_raise_exception_if_attribute_option_is_not_passed

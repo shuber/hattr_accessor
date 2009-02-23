@@ -13,7 +13,7 @@ module Huberry
         # Defines a type casting getter method for each attribute
         #
         define_method name do
-          value = send(options[:attribute])[name]
+          value = send("#{name}_before_type_cast".to_sym)
           case options[:type]
             when :string
               value.to_s
@@ -39,7 +39,7 @@ module Huberry
         # Define a *_before_type_cast method so that we can validate
         #
         define_method "#{name}_before_type_cast" do
-          send(options[:attribute])[name]
+          send(options[:attribute]).key?(name) ? send(options[:attribute])[name] : options[:default]
         end
       end
       

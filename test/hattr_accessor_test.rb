@@ -6,7 +6,7 @@ class CustomField
   hattr_accessor :unit, :reference, :attribute => :configuration
   hattr_accessor :offset, :type => :integer, :attribute => :configuration
   hattr_accessor :amount, :type => :float, :attribute => :configuration
-  hattr_accessor :price, :type => :decimal, :attribute => :configuration
+  hattr_accessor :price, :type => :decimal, :default => '5.0', :attribute => :configuration
   hattr_accessor :required, :type => :boolean, :attribute => :configuration2
   
   def configuration2
@@ -151,6 +151,12 @@ class HattrAccessorTest < Test::Unit::TestCase
   end
 
   def test_should_type_cast_price_as_decimal
+    @custom_field.price = '1.0'
+    assert_equal BigDecimal.new('1.0'), @custom_field.price
+  end
+
+  def test_should_get_default_price
+    assert_equal BigDecimal.new('5.0'), @custom_field.price
     @custom_field.price = '1.0'
     assert_equal BigDecimal.new('1.0'), @custom_field.price
   end

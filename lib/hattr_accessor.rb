@@ -14,6 +14,7 @@ module Huberry
         #
         define_method name do
           value = send("#{name}_before_type_cast".to_sym)
+          return value if options[:allow_nil] && value.nil?
           case options[:type]
             when :string
               value.to_s

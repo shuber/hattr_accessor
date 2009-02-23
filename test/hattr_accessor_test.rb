@@ -5,7 +5,7 @@ class CustomField
   hattr_accessor :name, :type, :type => :string, :attribute => :configuration
   hattr_accessor :unit, :reference, :attribute => :configuration
   hattr_accessor :offset, :type => :integer, :attribute => :configuration
-  hattr_accessor :amount, :type => :float, :attribute => :configuration
+  hattr_accessor :amount, :type => :float, :allow_nil => true, :attribute => :configuration
   hattr_accessor :price, :type => :decimal, :default => '5.0', :attribute => :configuration
   hattr_accessor :required, :type => :boolean, :attribute => :configuration2
   
@@ -95,6 +95,10 @@ class HattrAccessorTest < Test::Unit::TestCase
   def test_should_get_amount
     @custom_field.amount = 1.0
     assert_equal 1.0, @custom_field.amount
+  end
+
+  def test_should_get_nil_amount
+    assert_equal nil, @custom_field.amount
   end
   
   def test_should_type_cast_amount_as_float

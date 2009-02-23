@@ -1,3 +1,5 @@
+require 'bigdecimal'
+
 module Huberry
   module HattrAccessor
     class MissingAttributeError < StandardError; self; end
@@ -21,6 +23,8 @@ module Huberry
               value.to_f
             when :boolean
               ![false, nil, 0, '0', ''].include?(value)
+            when :decimal
+              BigDecimal.new(value.to_s)
             else
               value
           end

@@ -35,6 +35,12 @@ module Huberry
         define_method "#{name}=" do |value|
           send(options[:attribute])[name] = value
         end
+
+        # Define a *_before_type_cast method so that we can validate
+        #
+        define_method "#{name}_before_type_cast" do
+          send(options[:attribute])[name]
+        end
       end
       
       # Create the reader for #{options[:attribute]} unless it exists already

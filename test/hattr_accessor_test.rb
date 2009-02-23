@@ -170,4 +170,13 @@ class HattrAccessorTest < Test::Unit::TestCase
     assert_equal true, @custom_field.configuration2[:some_default_writer_value]
   end
   
+  def test_should_add_before_type_cast_reader
+    assert CustomField.method_defined?(:name_before_type_cast)
+    assert CustomField.method_defined?(:unit_before_type_cast)
+    assert CustomField.method_defined?(:offset_before_type_cast)
+    assert CustomField.method_defined?(:amount_before_type_cast)
+    assert CustomField.method_defined?(:price_before_type_cast)
+    assert CustomField.method_defined?(:required_before_type_cast)
+  end
+
 end

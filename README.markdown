@@ -70,6 +70,18 @@ To specify a default value for a member use the `:default` option. For example:
 	@data_source = DataSource.new
 	@data_source.adapter # 'mysql'
 
+You can also specify a proc for the default value. For example:
+
+	class DataSource
+	  hattr_accessor :adapter, :default => 'mysql', :attribute => :credentials
+	  hattr_accessor :username, :attribute => :credentials,
+	                 :default => lambda { |datasource| Etc.getpwuid(Process.uid).name }
+	  hattr_accessor :password, :attribute => :credentials
+	end
+	
+	@data_source = DataSource.new
+	@data_source.username # 'process_username'
+
 If you want to take advantage of type casting but also want to return `nil` if a value has not been set then use the `:allow_nil` option. 
 By default `:allow_nil` is false for typed members but true for non-typed members. For example:
 

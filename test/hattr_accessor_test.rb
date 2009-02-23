@@ -7,6 +7,8 @@ class CustomField
   hattr_accessor :offset, :type => :integer, :attribute => :configuration
   hattr_accessor :amount, :type => :float, :allow_nil => true, :attribute => :configuration
   hattr_accessor :price, :type => :decimal, :default => '5.0', :attribute => :configuration
+  hattr_accessor :sale_price, :type => :decimal, :attribute => :configuration,
+                 :default => lambda { |custom_field| custom_field.price / 2 }
   hattr_accessor :required, :type => :boolean, :attribute => :configuration2
   
   def configuration2
@@ -163,6 +165,14 @@ class HattrAccessorTest < Test::Unit::TestCase
     assert_equal BigDecimal.new('5.0'), @custom_field.price
     @custom_field.price = '1.0'
     assert_equal BigDecimal.new('1.0'), @custom_field.price
+  end
+
+  def test_should_get_sale_price
+    assert_equal BigDecimal.new('2.5'), @custom_field.sale_price
+    @custom_field.price = '1.0'
+    assert_equal BigDecimal.new('0.5'), @custom_field.sale_price
+    @custom_field.sale_price = '0.8'
+    assert_equal BigDecimal.new('0.8'), @custom_field.sale_price
   end
   
   def test_should_raise_exception_if_attribute_option_is_not_passed

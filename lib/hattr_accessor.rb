@@ -40,7 +40,7 @@ module Huberry
         # Define a *_before_type_cast method so that we can validate
         #
         define_method "#{name}_before_type_cast" do
-          send(options[:attribute]).key?(name) ? send(options[:attribute])[name] : options[:default]
+          send(options[:attribute]).key?(name) ? send(options[:attribute])[name] : (options[:default].respond_to?(:call) ? options[:default].call(self) : options[:default])
         end
       end
       

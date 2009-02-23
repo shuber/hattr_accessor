@@ -57,6 +57,32 @@ The current options (email me for suggestions for others) for `:type` are:
 	:integer
 	:float
 	:boolean
+	:decimal
+
+To specify a default value for a member use the `:default` option. For example:
+
+	class DataSource
+	  hattr_accessor :adapter, :default => 'mysql', :attribute => :credentials
+	  hattr_accessor :username, :default => 'root', :attribute => :credentials
+	  hattr_accessor :password, :attribute => :credentials
+	end
+	
+	@data_source = DataSource.new
+	@data_source.adapter # 'mysql'
+
+If you want to take advantage of type casting but also want to return `nil` if a value has not been set then use the `:allow_nil` option. 
+By default `:allow_nil` is false for typed members but true for non-typed members. For example:
+
+	class DataSource
+	  hattr_accessor :adapter, :type => :string, :allow_nil => true, :attribute => :credentials
+	  hattr_accessor :username, :type => :string, :attribute => :credentials
+	  hattr_accessor :password, :attribute => :credentials
+	end
+	
+	@data_source = DataSource.new
+	@data_source.adapter # nil
+	@data_source.username # ''
+	@data_source.password # nil
 
 NOTE: Make sure your call `define_attribute_methods` before calling `hattr_accessor` when you're using ActiveRecord and your `:attribute` is a 
 database field.

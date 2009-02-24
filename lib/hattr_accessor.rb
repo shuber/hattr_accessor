@@ -31,6 +31,12 @@ module Huberry
           end
         end
         
+        # Defines a predicate method for each attribute
+        #
+        define_method "#{name}?" do
+          send(name) ? true : false
+        end
+
         # Defines a setter method for each attribute
         #
         define_method "#{name}=" do |value|

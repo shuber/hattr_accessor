@@ -18,6 +18,8 @@ module Huberry
           case options[:type]
             when :string
               value.to_s
+            when :symbol
+              value.to_s.to_sym
             when :integer
               value.to_i
             when :float

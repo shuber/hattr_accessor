@@ -2,7 +2,8 @@ require 'test/unit'
 require File.dirname(__FILE__) + '/../lib/hattr_accessor'
 
 class CustomField
-  hattr_accessor :name, :type, :type => :string, :attribute => :configuration
+  hattr_accessor :name, :type => :string, :attribute => :configuration
+  hattr_accessor :type, :type => :symbol, :attribute => :configuration
   hattr_accessor :unit, :reference, :attribute => :configuration
   hattr_accessor :offset, :type => :integer, :attribute => :configuration
   hattr_accessor :amount, :type => :float, :allow_nil => true, :attribute => :configuration
@@ -54,9 +55,24 @@ class HattrAccessorTest < Test::Unit::TestCase
     assert_equal '', @custom_field.name
   end
 
-  def test_should_set_and_get_an_attribute_named_type
-    @custom_field.type = 'Date'
-    assert_equal 'Date', @custom_field.type
+  def test_should_set_type
+    @custom_field.type = :date
+    assert_equal({ :type => :date }, @custom_field.configuration)
+  end
+
+  def test_should_get_type
+    @custom_field.type = :date
+    assert_equal :date, @custom_field.type
+  end
+
+  def test_should_get_type_predicate
+    @custom_field.type = :date
+    assert_equal true, @custom_field.type?
+  end
+
+  def test_should_type_cast_type_as_symbol
+    @custom_field.type = 'date'
+    assert_equal :date, @custom_field.type
   end
 
   def test_should_set_unit

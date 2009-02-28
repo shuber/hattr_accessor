@@ -1,0 +1,11 @@
+widget_a:
+  id: 1
+  properties: "---\n  :name: \"Widget A\"\n  :manufacturer_id: 1\n  :colour: Red\n  :weight: 1.0\n"
+
+widget_b:
+  id: 2
+  properties: "---\n  :name: \"Widget B\"\n  :manufacturer_id: 2\n  :colour: Green\n  :weight: 2.0\n"
+
+widget_c:
+  id: 3
+  properties: "---\n  :name: \"Widget C\"\n  :manufacturer_id: 3\n  :colour: Blue\n  :weight: 3.0\n"

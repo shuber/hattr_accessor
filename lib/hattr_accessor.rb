@@ -4,12 +4,22 @@ module Huberry
   module HattrAccessor
     class MissingAttributeError < StandardError; self; end
 
+    def hattr_defined?(attribute)
+      hattr_attributes.include?(attribute.to_sym)
+    end
+
+    def hattr_attributes
+      @hattr_attributes ||= []
+    end
+
     def hattr_accessor(*attrs)
       options = attrs.last.is_a?(Hash) ? attrs.pop : {}
 
       raise MissingAttributeError, 'Must specify the :attribute option with the name of an attribute which will store the hash' if options[:attribute].nil?
 
       attrs.each do |name|
+        hattr_attributes << name
+
         # Defines a type casting getter method for each attribute
         #
         define_method name do
@@ -75,7 +85,31 @@ module Huberry
         EOF
       end
     end
+
+    module ActiveRecordExtensions
+      def self.included(base)
+        base.class_eval do
+
+          def read_attribute_with_hattr_accessor(attribute)
+            self.class.hattr_defined?(attribute) ? send(attribute) : read_attribute_without_hattr_accessor(attribute)
+          end
+          alias_method_chain :read_attribute, :hattr_accessor
+
+          def write_attribute_with_hattr_accessor(attribute, value)
+            self.class.hattr_defined?(attribute) ? send("#{attribute}=".to_sym, value) : write_attribute_without_hattr_accessor(attribute, value)
+          end
+          alias_method_chain :write_attribute, :hattr_accessor
+
+          def query_attribute_with_hattr_accessor(attribute)
+            self.class.hattr_defined?(attribute) ? send("#{attribute}?".to_sym) : query_attribute_without_hattr_accessor(attribute)
+          end
+          alias_method_chain :query_attribute, :hattr_accessor
+
+        end
+      end
+    end
   end
 end
 
 Class.send :include, Huberry::HattrAccessor
+ActiveRecord::Base.send :include, Huberry::HattrAccessor::ActiveRecordExtensions if Object.const_defined?(:ActiveRecord)

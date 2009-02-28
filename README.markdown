@@ -97,12 +97,12 @@ By default `:allow_nil` is false for typed members but true for non-typed member
 	@data_source.password # nil
 
 NOTE: Make sure your call `define_attribute_methods` before calling `hattr_accessor` when you're using ActiveRecord and your `:attribute` is a 
-database field.
+database field. The call to `define_attribute_methods` must be after the `serialize` call so that `define_attribute_methods` knows about the 
+serialized field.
 
-	class CustomField < ActiveRecord::Base
-	  define_attribute_methods
-	  
+	class CustomField < ActiveRecord::Base	  
 	  serialize :configuration, Hash
+	  define_attribute_methods
 	  
 	  hattr_accessor :testing, :attribute => :configuration
 	end

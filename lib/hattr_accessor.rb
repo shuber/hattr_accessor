@@ -28,6 +28,8 @@ module Huberry
               ![false, nil, 0, '0', ''].include?(value)
             when :decimal
               BigDecimal.new(value.to_s)
+            when :array
+              Array(value)
             else
               value
           end

@@ -11,6 +11,7 @@ class CustomField
   hattr_accessor :sale_price, :type => :decimal, :attribute => :configuration,
                  :default => lambda { |custom_field| custom_field.price / 2 }
   hattr_accessor :required, :type => :boolean, :attribute => :configuration2
+  hattr_accessor :sizes, :type => :array, :attribute => :configuration
 
   def configuration2
     @configuration2 ||= { :some_default_reader_value => true }
@@ -228,6 +229,34 @@ class HattrAccessorTest < Test::Unit::TestCase
 
   def test_should_get_sale_price_predicate
     assert_equal true, @custom_field.sale_price?
+  end
+
+  def test_should_set_sizes
+    @custom_field.sizes = %w(XS S M L XL XXL)
+    assert_equal({ :sizes => %w(XS S M L XL XXL) }, @custom_field.configuration)
+  end
+
+  def test_should_get_sizes
+    @custom_field.sizes = %w(XS S M L XL XXL)
+    assert_equal %w(XS S M L XL XXL), @custom_field.sizes
+  end
+
+  def test_should_get_sizes_predicate?
+    @custom_field.sizes = %w(XS S M L XL XXL)
+    assert_equal true, @custom_field.sizes?
+  end
+
+  def test_should_type_cast_sizes_as_array
+    @custom_field.sizes = 'XXL'
+    assert_equal %w(XXL), @custom_field.sizes
+  end
+
+  def test_should_edit_sizes_in_place
+    @custom_field.sizes = %w(XS S M L XL XXL)
+    @custom_field.sizes.delete("XXL")
+    assert_equal %w(XS S M L XL), @custom_field.sizes
+    @custom_field.sizes << "XXL"
+    assert_equal %w(XS S M L XL XXL), @custom_field.sizes
   end
 
   def test_should_raise_exception_if_attribute_option_is_not_passed

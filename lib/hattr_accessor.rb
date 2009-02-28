@@ -3,10 +3,10 @@ require 'bigdecimal'
 module Huberry
   module HattrAccessor
     class MissingAttributeError < StandardError; self; end
-    
+
     def hattr_accessor(*attrs)
       options = attrs.last.is_a?(Hash) ? attrs.pop : {}
-      
+
       raise MissingAttributeError, 'Must specify the :attribute option with the name of an attribute which will store the hash' if options[:attribute].nil?
 
       attrs.each do |name|
@@ -34,7 +34,7 @@ module Huberry
               value
           end
         end
-        
+
         # Defines a predicate method for each attribute
         #
         define_method "#{name}?" do
@@ -53,15 +53,15 @@ module Huberry
           send(options[:attribute]).key?(name) ? send(options[:attribute])[name] : (options[:default].respond_to?(:call) ? options[:default].call(self) : options[:default])
         end
       end
-      
+
       # Create the reader for #{options[:attribute]} unless it exists already
       #
       attr_reader options[:attribute] unless instance_methods.include?(options[:attribute].to_s)
-      
+
       # Create the writer for #{options[:attribute]} unless it exists already
       #
       attr_writer options[:attribute] unless instance_methods.include?("#{options[:attribute]}=")
-      
+
       # Overwrites the method passed as the :attribute option to ensure that it is a hash by default
       #
       unless instance_methods.include?("#{options[:attribute]}_with_hattr_accessor")

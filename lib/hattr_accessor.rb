@@ -111,5 +111,5 @@ module Huberry
   end
 end
 
-Class.send :include, Huberry::HattrAccessor
+Object.send :include, Huberry::HattrAccessor
 ActiveRecord::Base.send :include, Huberry::HattrAccessor::ActiveRecordExtensions if Object.const_defined?(:ActiveRecord)

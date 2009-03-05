@@ -58,6 +58,7 @@ The current options (email me for suggestions for others) for `:type` are:
 	:float
 	:boolean
 	:decimal
+	:array
 
 To specify a default value for a member use the `:default` option. For example:
 

@@ -2,6 +2,7 @@
   * Merge pixeltrix/master
   * Include Huberry::HattrAccessor in Object instead of Class
   * Update README
+  * Update gemspec
 
 2009-01-18 - Sean Huber (shuber@huberry.com)
   * Boolean type casted empty strings should return false

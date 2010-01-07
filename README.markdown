@@ -7,7 +7,7 @@ Allows you to define attr\_accessors that reference members of a hash
 Installation
 ------------
 
-	gem install shuber-hattr_accessor --source http://gems.github.com
+	gem install hattr_accessor
 
 
 Usage
